@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="174dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/login_header"
+        android:textAlignment="center"
+        android:textColor="@color/blue"
+        android:textSize="24dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email :"
+        android:textColor="@color/blue"
+        android:layout_marginTop="84dp"
+        android:layout_marginLeft="51dp"
+        android:textSize="16dp"/>
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="307dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:hint="Please enter your email"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/blue"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password :"
+        android:textColor="@color/blue"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="51dp"
+        android:textSize="16dp"/>
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="307dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:hint="Please enter your password"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/blue"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:layout_width="144dp"
+        android:layout_height="49dp"
+        android:text="Submit"
+        app:cornerRadius="12dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="51dp"
+        android:backgroundTint="@color/blue"/>
+
+
+
+</LinearLayout>
