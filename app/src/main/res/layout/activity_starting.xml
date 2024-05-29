@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="174dp"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/montserrat_extrabold"
         android:text="@string/starting_header"
         android:textAlignment="center"
         android:textColor="@color/blue"
@@ -25,20 +25,22 @@
         android:id="@+id/btnLogin"
         android:layout_width="308dp"
         android:layout_height="49dp"
-        android:backgroundTint="@color/blue"
-        android:text="Login"
-        android:textSize="16dp"
-        android:textFontWeight="600"
-        app:cornerRadius="12dp"
         android:layout_gravity="center"
-        android:layout_marginTop="150dp"/>
+        android:layout_marginTop="150dp"
+        android:backgroundTint="@color/blue"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Login"
+        android:textFontWeight="600"
+        android:textSize="16dp"
+        app:cornerRadius="12dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/copyright"
         android:layout_gravity="center"
-        android:layout_marginTop="280dp"/>
+        android:layout_marginTop="260dp"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/copyright" />
 
 
 </LinearLayout>

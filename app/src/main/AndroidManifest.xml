@@ -16,6 +16,15 @@
         android:theme="@style/Theme.ApkJournal"
         tools:targetApi="31">
         <activity
+            android:name=".CreateJournalActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListJournalActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
