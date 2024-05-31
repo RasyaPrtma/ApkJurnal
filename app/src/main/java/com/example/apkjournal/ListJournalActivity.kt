@@ -10,12 +10,28 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
 
 class ListJournalActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var journalAdapter: JournalAdapter
     private lateinit var journalList: ArrayList<Journal>
+    private lateinit var token: String
+
+    private fun getTokenFromSharedPreferences(): String? {
+        val sharedPref = getSharedPreferences("app_preferences", MODE_PRIVATE)
+        return sharedPref.getString("TOKEN", null)
+    }
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,28 +43,83 @@ class ListJournalActivity : AppCompatActivity() {
             insets
         }
 
-        val btnAdd = findViewById<ImageView>(R.id.btnAdd)
+        token = getTokenFromSharedPreferences() ?: ""
 
-        btnAdd.setOnClickListener{
-            val intent = Intent(this,CreateJournalActivity::class.java)
+        val btnAdd = findViewById<ImageView>(R.id.btnAdd)
+        btnAdd.setOnClickListener {
+            val intent = Intent(this, CreateJournalActivity::class.java)
             startActivity(intent)
         }
 
         val btnHome = findViewById<ImageView>(R.id.btnHome)
-        btnHome.setOnClickListener{
-            val intent = Intent(this,HomeActivity::class.java)
+        btnHome.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }
 
-        recyclerView = findViewById<RecyclerView>(R.id.recyclerViewJournal)
+        recyclerView = findViewById(R.id.recyclerViewJournal)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
 
         journalList = ArrayList()
-        journalList.add(Journal("First Entry", "31/05/2024", "This is the first note"))
-        journalList.add(Journal("Second Entry","31/05/2024", "This is the second note"))
         journalAdapter = JournalAdapter(journalList)
         recyclerView.adapter = journalAdapter
 
+        fetchJournals()
+    }
+
+    private fun fetchJournals() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val result = getJournals()
+            if (result != null) {
+                parseJournals(result)
+            }
+        }
+    }
+
+    private suspend fun getJournals(): String? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val url = URL("https://apijurnal.ndamelweb.com/public/api/v1/jurnals/users")
+                val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "GET"
+                connection.setRequestProperty("Accept", "application/json")
+                connection.setRequestProperty("Authorization", "Bearer $token")
+
+                val responseCode = connection.responseCode
+
+                val reader = BufferedReader(InputStreamReader(
+                    if (responseCode == HttpURLConnection.HTTP_OK) connection.inputStream else connection.errorStream
+                ))
+
+                val response = reader.use(BufferedReader::readText)
+                response
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
+        }
+    }
+
+    private fun parseJournals(response: String) {
+        try {
+            val jsonResponse = JSONObject(response)
+            val dataArray = jsonResponse.getJSONArray("data")
+            journalList.clear()
+            for (i in 0 until dataArray.length()) {
+                val dataObj = dataArray.getJSONObject(i)
+                val journal = Journal(
+                    title = dataObj.getString("title"),
+                    date = dataObj.getString("date"),
+                    note = dataObj.getString("content")
+                )
+                journalList.add(journal)
+            }
+            runOnUiThread {
+                journalAdapter.notifyDataSetChanged()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

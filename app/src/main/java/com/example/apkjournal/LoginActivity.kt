@@ -47,8 +47,9 @@ class LoginActivity : AppCompatActivity() {
             CoroutineScope(Dispatchers.IO).launch {
                 val result = loginTask(email, password)
                 handleLoginResult(result)
+                Log.d("Coroutine","Hello from coroutine thread")
             }
-
+            Log.d("Coroutine","Hello from main thread")
         }
     }
 
@@ -90,6 +91,14 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun saveTokenToSharedPreferences(token: String) {
+        val sharedPref = getSharedPreferences("app_preferences", MODE_PRIVATE)
+        with(sharedPref.edit()) {
+            putString("TOKEN", token)
+            apply()
+        }
+    }
+
     private fun handleLoginResult(result: String?) {
         if (result != null) {
             try {
@@ -97,11 +106,9 @@ class LoginActivity : AppCompatActivity() {
                 val message = jsonResponse.optString("message")
                 if (message == "Berhasil Login") {
                     val token = jsonResponse.optString("token")
-                    // Store the token if needed
+                    saveTokenToSharedPreferences(token) // Save the token
 
-                    val intent = Intent(this@LoginActivity, HomeActivity::class.java).apply {
-                        putExtra("TOKEN", token)
-                    }
+                    val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {

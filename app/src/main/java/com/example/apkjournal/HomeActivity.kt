@@ -24,6 +24,12 @@ import java.net.URL
 class HomeActivity : AppCompatActivity() {
     private lateinit var token: String
 
+    private fun getTokenFromSharedPreferences(): String? {
+        val sharedPref = getSharedPreferences("app_preferences", MODE_PRIVATE)
+        return sharedPref.getString("TOKEN", null)
+    }
+
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,14 +41,14 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
 
-        token = intent.getStringExtra("TOKEN") ?: ""
+        token = getTokenFromSharedPreferences() ?: ""
 
         val tvUsername = findViewById<TextView>(R.id.tvUsername)
         fetchUserData(tvUsername)
 
         val btnJournal = findViewById<Button>(R.id.btnJournal)
         btnJournal.setOnClickListener {
-           val intent = Intent(this,ListJournalActivity::class.java)
+            val intent = Intent(this, ListJournalActivity::class.java)
             startActivity(intent)
         }
     }
