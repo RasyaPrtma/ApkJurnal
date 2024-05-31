@@ -9,13 +9,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
+        android:id="@+id/tvUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginTop="50dp"
-        android:layout_marginRight="104dp"
+        android:layout_marginRight="60dp"
         android:fontFamily="@font/montserrat"
-        android:text="Hello,User"
+        android:text="Username"
         android:textColor="@color/blue" />
 
     <TextView
@@ -35,27 +36,12 @@
         android:layout_width="308dp"
         android:layout_height="49dp"
         android:layout_gravity="center"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="150dp"
         android:backgroundTint="@color/blue"
         android:fontFamily="@font/montserrat_medium"
         android:text="Journal"
         android:textFontWeight="600"
         android:textSize="16dp"
         app:cornerRadius="12dp" />
-
-    <Button
-        android:id="@+id/btnPresensi"
-        android:layout_width="308dp"
-        android:layout_height="49dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/darkGreen"
-        android:fontFamily="@font/montserrat_medium"
-        android:text="Presensi ( Disabled )"
-        android:textFontWeight="600"
-        android:textSize="16dp"
-        app:cornerRadius="12dp" />
-
-
 
 </LinearLayout>

@@ -21,7 +21,7 @@ class JournalAdapter(private val journalList: List<Journal>) : RecyclerView.Adap
     override fun onBindViewHolder(holder: JournalAdapter.JournalViewHolder, position: Int) {
        val currentItem = journalList[position]
         holder.title.text = currentItem.title
-        holder.date.text = currentItem.date.toString()
+        holder.date.text = currentItem.date
         holder.note.text = currentItem.note
     }
 

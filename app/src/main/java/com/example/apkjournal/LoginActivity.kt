@@ -1,8 +1,7 @@
+// LoginActivity.kt
 package com.example.apkjournal
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -12,6 +11,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -19,7 +22,6 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class LoginActivity : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -42,13 +44,17 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Email and Password must not be empty", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            LoginTask(email, password).execute()
+            CoroutineScope(Dispatchers.IO).launch {
+                val result = loginTask(email, password)
+                handleLoginResult(result)
+            }
+
         }
     }
 
-    inner class LoginTask(private val email: String, private val password: String) : AsyncTask<Void, Void, String?>() {
-        override fun doInBackground(vararg params: Void?): String? {
-            return try {
+    private suspend fun loginTask(email: String, password: String): String? {
+        return withContext(Dispatchers.IO) {
+            try {
                 val url = URL("https://apijurnal.ndamelweb.com/public/api/v1/auth/login")
 
                 val postData = JSONObject().apply {
@@ -82,27 +88,31 @@ class LoginActivity : AppCompatActivity() {
                 null
             }
         }
+    }
 
-        override fun onPostExecute(result: String?) {
-            super.onPostExecute(result)
+    private fun handleLoginResult(result: String?) {
+        if (result != null) {
+            try {
+                val jsonResponse = JSONObject(result)
+                val message = jsonResponse.optString("message")
+                if (message == "Berhasil Login") {
+                    val token = jsonResponse.optString("token")
+                    // Store the token if needed
 
-            if (result != null) {
-                try {
-                    val jsonResponse = JSONObject(result)
-                    if (jsonResponse.optBoolean("success")) {
-                        val intent = Intent(this@LoginActivity,HomeActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        Toast.makeText(this@LoginActivity, jsonResponse.optString("message", "Login failed"), Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@LoginActivity, HomeActivity::class.java).apply {
+                        putExtra("TOKEN", token)
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    Toast.makeText(this@LoginActivity, "An Error Occurred: Invalid response format", Toast.LENGTH_SHORT).show()
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
                 }
-            } else {
-                Toast.makeText(this@LoginActivity, "An Error Occurred: No response", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this@LoginActivity, "An Error Occurred: Invalid response format", Toast.LENGTH_SHORT).show()
             }
+        } else {
+            Toast.makeText(this@LoginActivity, "An Error Occurred: No response", Toast.LENGTH_SHORT).show()
         }
     }
 }

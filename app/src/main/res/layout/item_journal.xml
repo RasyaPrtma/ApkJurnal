@@ -27,9 +27,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/montserrat"
-            android:text="date"
-            android:textColor="@color/gray"
-            android:textSize="12dp" />
+            android:text="Date"
+            android:textSize="12dp"
+            android:textColor="@color/gray"/>
+
 
         <TextView
             android:id="@+id/tvNote"
@@ -38,13 +39,5 @@
             android:fontFamily="@font/montserrat"
             android:text="Lorem ipsum dolor sit amet,lorem ipsum dolor sit lorem ipsum dolor sit amet."
             android:textSize="12dp" />
-
-        <ImageView
-            android:id="@+id/iconDelete"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/delete_icon"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="-280dp"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

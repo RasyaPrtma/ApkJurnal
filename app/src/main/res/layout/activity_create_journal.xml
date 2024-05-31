@@ -1,14 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:outlineProvider="background"
     tools:context=".CreateJournalActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="150dp"
+        android:fontFamily="@font/montserrat_extrabold"
+        android:text="@string/create_header"
+        android:textAlignment="center"
+        android:textColor="@color/blue"
+        android:textSize="24dp"
+        android:textStyle="bold" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="51dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Kegiatan :"
+        android:textColor="@color/blue"
+        android:textSize="16dp" />
+
+    <EditText
+        android:id="@+id/etTitle"
+        android:layout_width="307dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/blue"
+        android:fontFamily="@font/montserrat"
+        android:hint="Hari ini melakukan apa?"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="51dp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Keterangan :"
+        android:textColor="@color/blue"
+        android:textSize="16dp" />
+
+    <EditText
+        android:id="@+id/etNote"
+        android:layout_width="307dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/blue"
+        android:fontFamily="@font/montserrat"
+        android:inputType="textMultiLine"
+        android:outlineProvider="background"
+        android:hint=""/>
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="144dp"
+        android:layout_height="49dp"
+        android:layout_marginLeft="51dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/blue"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Tambahkan"
+        app:cornerRadius="12dp" />
 
 
 </LinearLayout>

@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">ApkJournal</string>
-    <string name="starting_header">WELCOME TO JOURNAL \n APPLICATION</string>
+    <string name="starting_header">APLIKASI JURNAL \n MAGANG</string>
     <string name="login_header">LOGIN</string>
-    <string name="home_header">JOURNAL APPLICATION</string>
+    <string name="home_header">JURNAL MAGANG</string>
     <string name="copyright">XI RPL 1 SMKN 1 KANDEMAN</string>
+    <string name="create_header">BUAT JURNAL</string>
 </resources>
