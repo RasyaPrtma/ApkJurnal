@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -14,7 +15,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -26,6 +26,7 @@ class ListJournalActivity : AppCompatActivity() {
     private lateinit var journalAdapter: JournalAdapter
     private lateinit var journalList: ArrayList<Journal>
     private lateinit var token: String
+    private lateinit var tvUser: TextView
 
     private fun getTokenFromSharedPreferences(): String? {
         val sharedPref = getSharedPreferences("app_preferences", MODE_PRIVATE)
@@ -42,6 +43,7 @@ class ListJournalActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        tvUser = findViewById<TextView>(R.id.tvHelloUser)
 
         token = getTokenFromSharedPreferences() ?: ""
 
@@ -66,6 +68,7 @@ class ListJournalActivity : AppCompatActivity() {
         recyclerView.adapter = journalAdapter
 
         fetchJournals()
+        fetchUserDetails()
     }
 
     private fun fetchJournals() {
@@ -121,5 +124,57 @@ class ListJournalActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    private fun fetchUserDetails() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val result = getUserDetails()
+            if (result != null) {
+                updateUserTextView(result)
+            }
+        }
+    }
+
+    private suspend fun getUserDetails(): String? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val url = URL("https://apijurnal.ndamelweb.com/public/api/v1/users")
+                val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "GET"
+                connection.setRequestProperty("Accept", "application/json")
+                connection.setRequestProperty("Authorization", "Bearer $token")
+
+                val responseCode = connection.responseCode
+
+                val reader = BufferedReader(InputStreamReader(
+                    if (responseCode == HttpURLConnection.HTTP_OK) connection.inputStream else connection.errorStream
+                ))
+
+                val response = reader.use(BufferedReader::readText)
+                response
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
+        }
+    }
+
+    private fun updateUserTextView(response: String) {
+        try {
+            val jsonResponse = JSONObject(response)
+            val data = jsonResponse.getJSONObject("data")
+            val username = data.getString("name")
+            runOnUiThread {
+                tvUser.text = "Hello $username"
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fetchJournals()
+        fetchUserDetails()
     }
 }

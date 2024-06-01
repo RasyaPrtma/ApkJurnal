@@ -1,11 +1,12 @@
-// LoginActivity.kt
 package com.example.apkjournal
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,8 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class LoginActivity : AppCompatActivity() {
+    private lateinit var progressBar: ProgressBar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -35,6 +38,7 @@ class LoginActivity : AppCompatActivity() {
         val etEmail = findViewById<EditText>(R.id.etEmail)
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val btnSubmit = findViewById<Button>(R.id.btnSubmit)
+        progressBar = findViewById(R.id.progressBar)
 
         btnSubmit.setOnClickListener {
             val email = etEmail.text.toString().trim()
@@ -44,12 +48,17 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Email and Password must not be empty", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
+            progressBar.visibility = View.VISIBLE
             CoroutineScope(Dispatchers.IO).launch {
                 val result = loginTask(email, password)
-                handleLoginResult(result)
-                Log.d("Coroutine","Hello from coroutine thread")
+                withContext(Dispatchers.Main) {
+                    progressBar.visibility = View.GONE
+                    handleLoginResult(result)
+                    Log.d("Coroutine", "Hello from coroutine thread")
+                }
             }
-            Log.d("Coroutine","Hello from main thread")
+            Log.d("Coroutine", "Hello from main thread")
         }
     }
 
@@ -116,7 +125,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                Toast.makeText(this@LoginActivity, "An Error Occurred: Invalid response format", Toast.LENGTH_SHORT).show()
+                Log.d("TryCatch", "oh no something went wrong")
             }
         } else {
             Toast.makeText(this@LoginActivity, "An Error Occurred: No response", Toast.LENGTH_SHORT).show()

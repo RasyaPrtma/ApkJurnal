@@ -50,8 +50,8 @@ class CreateJournalActivity : AppCompatActivity() {
             val title = judul.text.toString().trim()
             val note = kegiatan.text.toString().trim()
 
-            if (title.isEmpty() || note.isEmpty()) {
-                Toast.makeText(this, "Title and Note must not be empty", Toast.LENGTH_SHORT).show()
+            if (title.length < 5 || note.length < 10) {
+                Toast.makeText(this, "Mohon isi kegiatan dengan 10 karakter lebih", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -59,6 +59,9 @@ class CreateJournalActivity : AppCompatActivity() {
                 val result = createJournal(title, note)
                 handleCreateJournalResult(result)
             }
+
+            judul.text = null
+            kegiatan.text = null
         }
     }
 
@@ -106,7 +109,8 @@ class CreateJournalActivity : AppCompatActivity() {
                 val message = jsonResponse.optString("message")
                 runOnUiThread {
                     Toast.makeText(this@CreateJournalActivity, message, Toast.LENGTH_SHORT).show()
-                    if (message == "Berhasil Membuat Jurnals") {
+                    if (message == "Anda Sudah Mengisi Jurnal!") {
+                        // Kembali ke ListJournalActivity dengan membawa token
                         val intent = Intent(this@CreateJournalActivity, ListJournalActivity::class.java).apply {
                             putExtra("TOKEN", token)
                         }
@@ -122,7 +126,7 @@ class CreateJournalActivity : AppCompatActivity() {
             }
         } else {
             runOnUiThread {
-                Toast.makeText(this@CreateJournalActivity, "An Error Occurred: No response", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@CreateJournalActivity, "berhasil membuat journal", Toast.LENGTH_SHORT).show()
             }
         }
     }
