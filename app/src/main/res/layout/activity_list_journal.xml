@@ -13,15 +13,15 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewJournal"
         android:layout_width="360dp"
-        android:layout_height="400dp"
+        android:layout_height="430dp"
         android:layout_marginTop="4dp"
 
         app:layout_constraintBottom_toTopOf="@+id/btnAdd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.024" />
+        app:layout_constraintVertical_bias="0.087" />
 
     <TextView
         android:id="@+id/tvHelloUser"
@@ -33,7 +33,7 @@
         android:textColor="@color/blue"
         android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.066"
+        app:layout_constraintHorizontal_bias="0.101"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,11 +43,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/montserrat_medium"
-        android:text="berikut adalah jurnal\n yang telah anda buat"
+        android:text="berikut adalah jurnal\nyang telah anda buat"
         android:textColor="@color/blue"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.082"
+        app:layout_constraintHorizontal_bias="0.129"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvHelloUser" />
 
@@ -59,6 +59,7 @@
         android:layout_marginBottom="8dp"
         android:src="@drawable/home_icon"
         app:layout_constraintBottom_toTopOf="@+id/tvHome"
+        app:layout_constraintEnd_toStartOf="@+id/btnAdd"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
@@ -78,13 +79,11 @@
         android:id="@+id/btnAdd"
         android:layout_width="71dp"
         android:layout_height="71dp"
-        android:layout_marginStart="52dp"
         android:layout_marginBottom="36dp"
         android:src="@drawable/add_icon"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnProfile"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/btnHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
     <ImageView
@@ -96,6 +95,7 @@
         android:src="@drawable/profile_icon2"
         app:layout_constraintBottom_toTopOf="@+id/tvProfile"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnAdd"
         tools:ignore="MissingConstraints" />
 
     <TextView

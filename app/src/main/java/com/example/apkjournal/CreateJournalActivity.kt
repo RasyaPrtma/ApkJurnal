@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -45,6 +46,7 @@ class CreateJournalActivity : AppCompatActivity() {
         val judul = findViewById<EditText>(R.id.etTitle)
         val kegiatan = findViewById<EditText>(R.id.etNote)
         val btnAdd = findViewById<Button>(R.id.btnAdd)
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
 
         btnAdd.setOnClickListener {
             val title = judul.text.toString().trim()
@@ -54,10 +56,13 @@ class CreateJournalActivity : AppCompatActivity() {
                 Toast.makeText(this, "Mohon isi kegiatan dengan 10 karakter lebih", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
+            progressBar.visibility = ProgressBar.VISIBLE
             CoroutineScope(Dispatchers.IO).launch {
                 val result = createJournal(title, note)
-                handleCreateJournalResult(result)
+                withContext(Dispatchers.Main) {
+                    progressBar.visibility = ProgressBar.GONE
+                    handleCreateJournalResult(result)
+                }
             }
 
             judul.text = null
@@ -126,7 +131,7 @@ class CreateJournalActivity : AppCompatActivity() {
             }
         } else {
             runOnUiThread {
-                Toast.makeText(this@CreateJournalActivity, "berhasil membuat journal", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@CreateJournalActivity, "Berhasil membuat jurnal", Toast.LENGTH_SHORT).show()
             }
         }
     }

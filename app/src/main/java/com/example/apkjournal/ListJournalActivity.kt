@@ -2,6 +2,7 @@ package com.example.apkjournal
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -56,6 +57,12 @@ class ListJournalActivity : AppCompatActivity() {
         val btnHome = findViewById<ImageView>(R.id.btnHome)
         btnHome.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+        }
+
+        val btnProfile = findViewById<ImageView>(R.id.btnProfile)
+        btnProfile.setOnClickListener{
+            val intent = Intent(this,ProfileActivity::class.java)
             startActivity(intent)
         }
 

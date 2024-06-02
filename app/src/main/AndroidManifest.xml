@@ -11,10 +11,13 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/smk_n_1_kandeman"
+        android:roundIcon="@drawable/kandeman_logo_pictures"
         android:supportsRtl="true"
         android:theme="@style/Theme.ApkJournal"
         tools:targetApi="31">
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".CreateJournalActivity"
             android:exported="false" />
