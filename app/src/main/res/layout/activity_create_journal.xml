@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
@@ -10,77 +10,99 @@
     tools:context=".CreateJournalActivity">
 
     <TextView
+        android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="64dp"
         android:fontFamily="@font/montserrat_extrabold"
         android:text="@string/create_header"
         android:textAlignment="center"
         android:textColor="@color/blue"
         android:textSize="24dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="51dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="120dp"
         android:fontFamily="@font/montserrat"
         android:text="Kegiatan :"
         android:textColor="@color/blue"
-        android:textSize="16dp" />
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@+id/etTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <EditText
         android:id="@+id/etTitle"
-        android:layout_width="307dp"
+        android:layout_width="308dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="@color/blue"
         android:fontFamily="@font/montserrat"
         android:hint="Hari ini melakukan apa?"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <TextView
+        android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="51dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/montserrat"
         android:text="Keterangan :"
         android:textColor="@color/blue"
-        android:textSize="16dp" />
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@+id/etNote"
+        app:layout_constraintTop_toBottomOf="@+id/etTitle" />
 
     <EditText
         android:id="@+id/etNote"
-        android:layout_width="307dp"
+        android:layout_width="308dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="@color/blue"
         android:fontFamily="@font/montserrat"
         android:inputType="textMultiLine"
-        android:outlineProvider="background"
-        android:hint=""/>
+        android:contentDescription=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
     <Button
         android:id="@+id/btnAdd"
         android:layout_width="144dp"
         android:layout_height="49dp"
-        android:layout_marginLeft="51dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="32dp"
         android:backgroundTint="@color/blue"
         android:fontFamily="@font/montserrat_medium"
         android:text="Tambahkan"
-        app:cornerRadius="12dp" />
+        app:cornerRadius="12dp"
+        app:layout_constraintStart_toStartOf="@+id/etNote"
+        app:layout_constraintTop_toBottomOf="@+id/etNote" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="32dp"
-        android:visibility="gone" />
+        android:layout_marginBottom="100dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

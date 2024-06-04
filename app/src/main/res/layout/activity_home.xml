@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeActivity"
+
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
@@ -14,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginTop="50dp"
-        android:layout_marginRight="60dp"
+        android:layout_marginRight="50dp"
         android:fontFamily="@font/montserrat"
         android:text="Username"
         android:textColor="@color/blue" />
